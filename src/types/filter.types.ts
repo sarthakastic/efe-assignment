@@ -3,16 +3,18 @@
  * Defines all types related to the dynamic filter system
  */
 
-// Field types enum
-export enum FieldType {
-  TEXT = 'text',
-  NUMBER = 'number',
-  DATE = 'date',
-  AMOUNT = 'amount',
-  SINGLE_SELECT = 'singleSelect',
-  MULTI_SELECT = 'multiSelect',
-  BOOLEAN = 'boolean',
-}
+// Field types - using const object instead of enum for erasable syntax
+export const FieldType = {
+  TEXT: 'text',
+  NUMBER: 'number',
+  DATE: 'date',
+  AMOUNT: 'amount',
+  SINGLE_SELECT: 'singleSelect',
+  MULTI_SELECT: 'multiSelect',
+  BOOLEAN: 'boolean',
+} as const;
+
+export type FieldType = (typeof FieldType)[keyof typeof FieldType];
 
 // Operator types per field type
 export type TextOperator = 'equals' | 'contains' | 'startsWith' | 'endsWith' | 'doesNotContain' | 'regex';

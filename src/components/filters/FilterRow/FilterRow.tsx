@@ -107,13 +107,16 @@ export const FilterRow = ({ condition, onUpdate, onRemove }: FilterRowProps) => 
       >
         {/* Field Selector */}
         <FormControl size="small" sx={{ minWidth: { xs: 150, sm: 180 } }}>
-          <InputLabel id={`field-label-${condition.id}`}>Field</InputLabel>
+          <InputLabel id={`field-label-${condition.id}`} shrink>
+            Field
+          </InputLabel>
           <Select
             value={condition.field}
             onChange={(e) => handleFieldChange(e.target.value)}
             label="Field"
             labelId={`field-label-${condition.id}`}
             aria-label="Select field to filter"
+            notched
           >
             {FIELD_DEFINITIONS.map((field) => (
               <MenuItem key={field.key} value={field.key}>

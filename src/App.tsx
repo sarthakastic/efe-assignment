@@ -99,7 +99,7 @@ function App() {
 
           {/* Data Table */}
           <DataTable data={filteredEmployees} totalCount={employees.length} />
-        </>
+    </>
       )}
     </Container>
   );

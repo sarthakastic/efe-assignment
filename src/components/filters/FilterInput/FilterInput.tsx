@@ -23,7 +23,12 @@ export const FilterInput = ({ condition, onChange }: FilterInputProps) => {
       return <TextInput condition={condition} onChange={onChange} />;
 
     case FieldType.NUMBER:
-      return <NumberInput condition={condition} onChange={onChange} />;
+      return (
+        <NumberInput
+          condition={condition}
+          onChange={(value) => onChange(value)}
+        />
+      );
 
     case FieldType.DATE:
       return <DateRangeInput condition={condition} onChange={onChange} />;

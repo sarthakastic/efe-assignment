@@ -15,8 +15,8 @@ export enum FieldType {
 }
 
 // Operator types per field type
-export type TextOperator = 'equals' | 'contains' | 'startsWith' | 'endsWith' | 'doesNotContain';
-export type NumberOperator = 'equals' | 'greaterThan' | 'lessThan' | 'greaterThanOrEqual' | 'lessThanOrEqual';
+export type TextOperator = 'equals' | 'contains' | 'startsWith' | 'endsWith' | 'doesNotContain' | 'regex';
+export type NumberOperator = 'equals' | 'greaterThan' | 'lessThan' | 'greaterThanOrEqual' | 'lessThanOrEqual' | 'between';
 export type DateOperator = 'between';
 export type AmountOperator = 'between';
 export type SelectOperator = 'is' | 'isNot';

@@ -65,20 +65,29 @@ const matchesFilter = (employee: Employee, condition: FilterCondition): boolean 
  * Text field filtering
  */
 const filterByText = (value: any, condition: FilterCondition): boolean => {
-  const textValue = normalizeText(value?.toString() || '');
-  const filterValue = normalizeText(condition.value as string);
+  const textValue = value?.toString() || '';
+  const filterValue = condition.value as string;
 
   switch (condition.operator) {
     case 'equals':
-      return textValue === filterValue;
+      return normalizeText(textValue) === normalizeText(filterValue);
     case 'contains':
-      return textValue.includes(filterValue);
+      return normalizeText(textValue).includes(normalizeText(filterValue));
     case 'startsWith':
-      return textValue.startsWith(filterValue);
+      return normalizeText(textValue).startsWith(normalizeText(filterValue));
     case 'endsWith':
-      return textValue.endsWith(filterValue);
+      return normalizeText(textValue).endsWith(normalizeText(filterValue));
     case 'doesNotContain':
-      return !textValue.includes(filterValue);
+      return !normalizeText(textValue).includes(normalizeText(filterValue));
+    case 'regex':
+      try {
+        // For regex, we don't normalize to preserve case sensitivity option
+        const regex = new RegExp(filterValue, 'i'); // Case-insensitive by default
+        return regex.test(textValue);
+      } catch (error) {
+        // Invalid regex pattern - return false
+        return false;
+      }
     default:
       return true;
   }
@@ -89,21 +98,40 @@ const filterByText = (value: any, condition: FilterCondition): boolean => {
  */
 const filterByNumber = (value: any, condition: FilterCondition): boolean => {
   const numValue = Number(value);
-  const filterValue = Number(condition.value);
 
-  if (isNaN(numValue) || isNaN(filterValue)) return false;
+  if (isNaN(numValue)) return false;
 
   switch (condition.operator) {
-    case 'equals':
+    case 'equals': {
+      const filterValue = Number(condition.value);
+      if (isNaN(filterValue)) return false;
       return numValue === filterValue;
-    case 'greaterThan':
+    }
+    case 'greaterThan': {
+      const filterValue = Number(condition.value);
+      if (isNaN(filterValue)) return false;
       return numValue > filterValue;
-    case 'lessThan':
+    }
+    case 'lessThan': {
+      const filterValue = Number(condition.value);
+      if (isNaN(filterValue)) return false;
       return numValue < filterValue;
-    case 'greaterThanOrEqual':
+    }
+    case 'greaterThanOrEqual': {
+      const filterValue = Number(condition.value);
+      if (isNaN(filterValue)) return false;
       return numValue >= filterValue;
-    case 'lessThanOrEqual':
+    }
+    case 'lessThanOrEqual': {
+      const filterValue = Number(condition.value);
+      if (isNaN(filterValue)) return false;
       return numValue <= filterValue;
+    }
+    case 'between': {
+      const range = condition.value as { min: number; max: number };
+      if (isNaN(range.min) || isNaN(range.max)) return false;
+      return numValue >= range.min && numValue <= range.max;
+    }
     default:
       return true;
   }

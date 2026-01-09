@@ -107,11 +107,13 @@ export const FilterRow = ({ condition, onUpdate, onRemove }: FilterRowProps) => 
       >
         {/* Field Selector */}
         <FormControl size="small" sx={{ minWidth: { xs: 150, sm: 180 } }}>
-          <InputLabel>Field</InputLabel>
+          <InputLabel id={`field-label-${condition.id}`}>Field</InputLabel>
           <Select
             value={condition.field}
             onChange={(e) => handleFieldChange(e.target.value)}
             label="Field"
+            labelId={`field-label-${condition.id}`}
+            aria-label="Select field to filter"
           >
             {FIELD_DEFINITIONS.map((field) => (
               <MenuItem key={field.key} value={field.key}>
@@ -122,16 +124,43 @@ export const FilterRow = ({ condition, onUpdate, onRemove }: FilterRowProps) => 
         </FormControl>
 
         {/* Operator Selector */}
-        <FormControl size="small" sx={{ minWidth: { xs: 160, sm: 200 } }}>
-          <InputLabel>Operator</InputLabel>
+        <FormControl size="small" sx={{ minWidth: { xs: 180, sm: 240 }, maxWidth: { xs: 200, sm: 280 } }}>
+          <InputLabel id={`operator-label-${condition.id}`} shrink>
+            Operator
+          </InputLabel>
           <Select
             value={condition.operator}
             onChange={(e) => handleOperatorChange(e.target.value as FilterOperator)}
             label="Operator"
+            labelId={`operator-label-${condition.id}`}
+            aria-label="Select filter operator"
+            renderValue={(value) => (
+              <Box
+                component="span"
+                sx={{
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  display: 'block',
+                  maxWidth: '100%',
+                }}
+                title={OPERATOR_LABELS[value as FilterOperator]}
+              >
+                {OPERATOR_LABELS[value as FilterOperator]}
+              </Box>
+            )}
+            MenuProps={{
+              PaperProps: {
+                style: {
+                  maxHeight: 300,
+                },
+              },
+            }}
           >
             {fieldDef?.operators.map((op) => (
-              <MenuItem key={op} value={op}>
-                {OPERATOR_LABELS[op]}
+              <MenuItem key={op} value={op} sx={{ whiteSpace: 'normal', py: 1 }}>
+                <Box component="span" sx={{ display: 'block', width: '100%' }}>
+                  {OPERATOR_LABELS[op]}
+                </Box>
               </MenuItem>
             ))}
           </Select>
@@ -148,6 +177,8 @@ export const FilterRow = ({ condition, onUpdate, onRemove }: FilterRowProps) => 
           onClick={onRemove}
           size="small"
           sx={{ mt: 0.5, flexShrink: 0 }}
+          aria-label={`Remove filter for ${condition.field}`}
+          title="Remove filter"
         >
           <Trash2 size={18} />
         </IconButton>

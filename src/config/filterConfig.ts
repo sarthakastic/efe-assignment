@@ -13,38 +13,38 @@ export const FIELD_DEFINITIONS: FieldDefinition[] = [
     key: 'id',
     label: 'ID',
     type: FieldType.TEXT,
-    operators: ['equals', 'contains', 'startsWith', 'endsWith', 'doesNotContain'],
+    operators: ['equals', 'contains', 'startsWith', 'endsWith', 'doesNotContain', 'regex'],
   },
   {
     key: 'name',
     label: 'Name',
     type: FieldType.TEXT,
-    operators: ['equals', 'contains', 'startsWith', 'endsWith', 'doesNotContain'],
+    operators: ['equals', 'contains', 'startsWith', 'endsWith', 'doesNotContain', 'regex'],
   },
   {
     key: 'email',
     label: 'Email',
     type: FieldType.TEXT,
-    operators: ['equals', 'contains', 'startsWith', 'endsWith', 'doesNotContain'],
+    operators: ['equals', 'contains', 'startsWith', 'endsWith', 'doesNotContain', 'regex'],
   },
   {
     key: 'department',
     label: 'Department',
     type: FieldType.TEXT,
-    operators: ['equals', 'contains', 'startsWith', 'endsWith', 'doesNotContain'],
+    operators: ['equals', 'contains', 'startsWith', 'endsWith', 'doesNotContain', 'regex'],
   },
   // Number Fields
   {
     key: 'projects',
     label: 'Projects',
     type: FieldType.NUMBER,
-    operators: ['equals', 'greaterThan', 'lessThan', 'greaterThanOrEqual', 'lessThanOrEqual'],
+    operators: ['equals', 'greaterThan', 'lessThan', 'greaterThanOrEqual', 'lessThanOrEqual', 'between'],
   },
   {
     key: 'performanceRating',
     label: 'Performance Rating',
     type: FieldType.NUMBER,
-    operators: ['equals', 'greaterThan', 'lessThan', 'greaterThanOrEqual', 'lessThanOrEqual'],
+    operators: ['equals', 'greaterThan', 'lessThan', 'greaterThanOrEqual', 'lessThanOrEqual', 'between'],
   },
   // Date Fields
   {
@@ -282,13 +282,14 @@ export const OPERATOR_LABELS: OperatorLabels = {
   startsWith: 'Starts With',
   endsWith: 'Ends With',
   doesNotContain: 'Does Not Contain',
+  regex: 'Matches Regex',
   // Number operators
   greaterThan: 'Greater Than',
   lessThan: 'Less Than',
   greaterThanOrEqual: 'Greater Than or Equal',
   lessThanOrEqual: 'Less Than or Equal',
-  // Date operators
   between: 'Between',
+  // Date operators
   // Amount operators (same as date, but for amounts)
   // Select operators
   is: 'Is',

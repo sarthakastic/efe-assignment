@@ -96,6 +96,7 @@ export const FilterBuilder = () => {
             startIcon={<Plus size={18} />}
             onClick={handleAddFilter}
             size="small"
+            aria-label="Add new filter"
           >
             Add Filter
           </Button>
@@ -106,6 +107,7 @@ export const FilterBuilder = () => {
               startIcon={<X size={18} />}
               onClick={handleClearAll}
               size="small"
+              aria-label="Clear all filters"
             >
               Clear All
             </Button>
@@ -134,6 +136,7 @@ export const FilterBuilder = () => {
               startIcon={<Check size={18} />}
               onClick={handleApplyFilters}
               size="medium"
+              aria-label="Apply filters to table"
             >
               Apply Filters
             </Button>

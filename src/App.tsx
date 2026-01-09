@@ -1,9 +1,11 @@
 import { useEffect, useState, useMemo } from 'react';
 import './App.css';
-import { Container, Typography, Box, CircularProgress } from '@mui/material';
+import { Container, Typography, Box, CircularProgress, Button, Stack } from '@mui/material';
+import { FileText, FileJson } from 'lucide-react';
 import { employeeApi, type Employee } from './services';
 import { useAppSelector } from './store/hooks';
 import { applyFilters } from './services/filterService';
+import { exportService } from './services/exportService';
 import { FilterBuilder } from './components/filters/FilterBuilder';
 import { DataTable } from './components/table';
 
@@ -49,9 +51,40 @@ function App() {
         backdropFilter: 'blur(10px)',
       }}
     >
-      <Typography variant="h4" gutterBottom sx={{ color: '#333' }}>
-        Employee Directory
-      </Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          mb: 3,
+          flexWrap: 'wrap',
+          gap: 2,
+        }}
+      >
+        <Typography variant="h4" sx={{ color: '#333' }} component="h1">
+          Employee Directory
+        </Typography>
+        {!loading && !error && filteredEmployees.length > 0 && (
+          <Stack direction="row" spacing={1}>
+            <Button
+              variant="outlined"
+              startIcon={<FileText size={18} />}
+              onClick={() => exportService.exportToCSV(filteredEmployees)}
+              aria-label="Export filtered data to CSV"
+            >
+              Export CSV
+            </Button>
+            <Button
+              variant="outlined"
+              startIcon={<FileJson size={18} />}
+              onClick={() => exportService.exportToJSON(filteredEmployees)}
+              aria-label="Export filtered data to JSON"
+            >
+              Export JSON
+            </Button>
+          </Stack>
+        )}
+      </Box>
 
       {loading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
